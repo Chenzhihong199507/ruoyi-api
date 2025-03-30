@@ -7,22 +7,12 @@ ENV LANGUAGE C.UTF-8
 ENV LC_ALL C.UTF-8
 ENV SERVER_PORT=6039
 
-MAINTAINER ageerle
-
-RUN mkdir -p /ruoyi/server/logs \
-    /ruoyi/server/temp \
-    /ruoyi/skywalking/agent
-
-
-#工作空间
-WORKDIR /ruoyi/server
-
-
-
-EXPOSE ${SERVER_PORT}
+# 设置工作目录
+WORKDIR /app
 
 ADD ./target/ruoyi-admin.jar ./app.jar
 
+EXPOSE ${SERVER_PORT}
 
 ENTRYPOINT ["java", \
             "-Djava.security.egd=file:/dev/./urandom", \
