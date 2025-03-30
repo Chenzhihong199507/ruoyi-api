@@ -1,15 +1,25 @@
-# 使用多阶段构建优化镜像大小
-FROM maven:3.8.4-openjdk-17-slim AS builder
-WORKDIR /app
-COPY pom.xml .
-RUN mvn dependency:go-offline
-# COPY src ./src/
-RUN mvn package -DskipTests
+#基础镜像
+FROM findepi/graalvm:java17-native
 
-# 运行时镜像
-FROM openjdk:17-jdk-slim
-COPY --from=builder /app/target/*.jar app.jar
-EXPOSE 6039
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# 设置环境变量
+ENV LANG C.UTF-8
+ENV LANGUAGE C.UTF-8
+ENV LC_ALL C.UTF-8
+ENV SERVER_PORT=6039
+
+# 设置工作目录
+WORKDIR /app
+
+ADD ./target/ruoyi-admin.jar ./app.jar
+
+EXPOSE ${SERVER_PORT}
+
+ENTRYPOINT ["java", \
+            "-Djava.security.egd=file:/dev/./urandom", \
+            "-Dserver.port=${SERVER_PORT}", \
+            # 应用名称 如果想区分集群节点监控 改成不同的名称即可
+#            "-Dskywalking.agent.service_name=ruoyi-server", \
+#            "-javaagent:/ruoyi/skywalking/agent/skywalking-agent.jar", \
+            "-jar", "app.jar"]
 
 
