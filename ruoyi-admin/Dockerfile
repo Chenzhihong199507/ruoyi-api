@@ -10,7 +10,7 @@ ENV SERVER_PORT=6039
 # 设置工作目录
 WORKDIR /app
 
-# COPY ./target/ruoyi-admin.jar ./app.jar
+ADD ./target/ruoyi-admin.jar ./app.jar
 
 EXPOSE ${SERVER_PORT}
 
