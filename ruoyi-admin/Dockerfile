@@ -12,7 +12,7 @@ WORKDIR /app
 
 # 打印当前目录
 RUN pwd
-COPY ./target/ruoyi-admin.jar ./app.jar
+COPY target/ruoyi-admin.jar ./app.jar
 
 EXPOSE ${SERVER_PORT}
 
