@@ -9,16 +9,16 @@ ENV SERVER_PORT=6039
 
 MAINTAINER ageerle
 
-RUN mkdir -p /ruoyi/server/logs \
-    /ruoyi/server/temp \
-    /ruoyi/skywalking/agent
+# RUN mkdir -p /ruoyi/server/logs \
+#     /ruoyi/server/temp \
+#     /ruoyi/skywalking/agent
 
 #工作空间
-WORKDIR /ruoyi/server
+WORKDIR /app
 
 EXPOSE ${SERVER_PORT}
 
-ADD ./target/ruoyi-admin.jar ./app.jar
+COPY ./ruoyi-admin/target/*.jar app.jar
 
 
 ENTRYPOINT ["java", \
