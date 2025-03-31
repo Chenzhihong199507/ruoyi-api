@@ -18,7 +18,7 @@ WORKDIR /ruoyi/server
 
 EXPOSE ${SERVER_PORT}
 
-ADD ./target/ruoyi-admin.jar ./app.jar
+ADD /ruoyi/server/ruoyi-admin/target/ruoyi-admin.jar ./app.jar
 
 
 ENTRYPOINT ["java", \
