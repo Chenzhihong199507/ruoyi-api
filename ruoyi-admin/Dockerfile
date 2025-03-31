@@ -1,5 +1,5 @@
 #基础镜像
-FROM findepi/graalvm:java17-native AS builder
+FROM findepi/graalvm:java17-native
 
 # 设置环境变量
 ENV LANG C.UTF-8
@@ -7,15 +7,19 @@ ENV LANGUAGE C.UTF-8
 ENV LC_ALL C.UTF-8
 ENV SERVER_PORT=6039
 
-# 设置工作目录
-WORKDIR /app
+MAINTAINER ageerle
 
-# COPY ./target/ruoyi-admin.jar ./app.jar
-FROM openjdk:17-slim
+RUN mkdir -p /ruoyi/server/logs \
+    /ruoyi/server/temp \
+    /ruoyi/skywalking/agent
 
-COPY --from=builder ./target/ruoyi-admin.jar ./app.jar
+#工作空间
+WORKDIR /ruoyi/server
 
 EXPOSE ${SERVER_PORT}
+
+ADD ./target/ruoyi-admin.jar ./app.jar
+
 
 ENTRYPOINT ["java", \
             "-Djava.security.egd=file:/dev/./urandom", \
