@@ -1,5 +1,5 @@
 #基础镜像
-FROM findepi/graalvm:java17-native
+FROM findepi/graalvm:java17-native AS builder
 
 # 设置环境变量
 ENV LANG C.UTF-8
@@ -10,7 +10,9 @@ ENV SERVER_PORT=6039
 # 设置工作目录
 WORKDIR /app
 
-ADD ./target/ruoyi-admin.jar ./app.jar
+# COPY ./target/ruoyi-admin.jar ./app.jar
+
+COPY --from=builder ./target/ruoyi-admin.jar ./app.jar
 
 EXPOSE ${SERVER_PORT}
 
@@ -20,6 +22,6 @@ ENTRYPOINT ["java", \
             # 应用名称 如果想区分集群节点监控 改成不同的名称即可
 #            "-Dskywalking.agent.service_name=ruoyi-server", \
 #            "-javaagent:/ruoyi/skywalking/agent/skywalking-agent.jar", \
-            "-jar", "ruoyi-admin.jar"]
+            "-jar", "app.jar"]
 
 
