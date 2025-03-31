@@ -27,6 +27,6 @@ ENTRYPOINT ["java", \
             # 应用名称 如果想区分集群节点监控 改成不同的名称即可
 #            "-Dskywalking.agent.service_name=ruoyi-server", \
 #            "-javaagent:/ruoyi/skywalking/agent/skywalking-agent.jar", \
-            "-jar", "app.jar"]
+            "-Xms512m", "-Xmx2g", "-XX:+UseG1GC", "-jar", "app.jar"]
 
 
