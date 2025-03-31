@@ -11,6 +11,7 @@ ENV SERVER_PORT=6039
 WORKDIR /app
 
 # COPY ./target/ruoyi-admin.jar ./app.jar
+FROM openjdk:17-slim
 
 COPY --from=builder ./target/ruoyi-admin.jar ./app.jar
 
